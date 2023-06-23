@@ -14,8 +14,6 @@ RUN dotnet build "PlaywrightNet.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "PlaywrightNet.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-RUN pwsh bin/Debug/net7.0/playwright.ps1 install
-
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .

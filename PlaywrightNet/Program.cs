@@ -1,10 +1,15 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿
 // .NET information
 using Microsoft.Playwright;
 using PlaywrightNet;
 using System.Net;
 using System.Runtime.InteropServices;
 using static System.Console;
+
+//add argument when calling docker run or include commandLineArgs in launchSettings.json.
+//Or just leave as it always try to install
+if (args.Length > 0 && args[0] == "-i")
+    PerformInitialPlaywrightInstall();
 
 WriteLine(RuntimeInformation.FrameworkDescription);
 
@@ -65,3 +70,11 @@ string GetInBestUnit(long size)
     }
 }
 
+static void PerformInitialPlaywrightInstall()
+{
+    var exitCode = Microsoft.Playwright.Program.Main(new[] { "install", "--with-deps", "chromium" });
+    if (exitCode != 0)
+    {
+        throw new Exception($"Playwright exited with code {exitCode}");
+    }
+}

@@ -19,7 +19,7 @@ namespace PlaywrightNet
             {
                 Path = "screenshot.png"
             });
-
+            await Console.Out.WriteLineAsync("Playwright Test Completed");
         }
     }
 }
